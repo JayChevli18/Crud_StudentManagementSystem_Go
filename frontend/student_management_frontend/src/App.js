@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css'; // Import the CSS file
+import './App.css'; 
 
-const apiUrl = 'http://localhost:8080/students'; // Backend API URL
+const apiUrl = 'http://localhost:8080/students';
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -18,7 +18,7 @@ function App() {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(apiUrl);
-      setStudents(response.data);
+      setStudents(response.data || []);
     } catch (error) {
       console.error("Error fetching students:", error);
     }
@@ -29,6 +29,7 @@ function App() {
   };
 
   const handleCreateStudent = async () => {
+    console.log("C")
     try {
       await axios.post(apiUrl, newStudent);
       fetchStudents();
@@ -72,7 +73,6 @@ function App() {
       <h1>Student Management System</h1>
 
 
-      {/* Add New Student */}
       <h2>Add New Student</h2>
       <form onSubmit={(e) => e.preventDefault()}>
         <input
@@ -106,7 +106,6 @@ function App() {
         </div>
       </form>
 
-      {/* Edit Student */}
       {editing && (
         <div>
           <h2>Edit Student</h2>
@@ -144,7 +143,6 @@ function App() {
           </form>
         </div>
       )}
-      {/* Student List */}
       <h2>All Students</h2>
       <ul>
         {students.map((student) => (

@@ -6,7 +6,7 @@ const apiUrl = 'http://localhost:8080/students';
 
 function App() {
   const [students, setStudents] = useState([]);
-  const [newStudent, setNewStudent] = useState({ name: '', age: '', grade: '' });
+  const [newStudent, setNewStudent] = useState({ name: '', age: Number(0), grade: '' });
   const [editing, setEditing] = useState(false);
   const [currentStudent, setCurrentStudent] = useState(null);
 
@@ -29,11 +29,13 @@ function App() {
   };
 
   const handleCreateStudent = async () => {
-    console.log("C")
+    console.log(newStudent.name, newStudent.age, newStudent.grade );
+    console.log(typeof(newStudent.age))
+    const studentData={...newStudent,age:parseInt(newStudent.age)}
     try {
-      await axios.post(apiUrl, newStudent);
+      await axios.post(apiUrl, studentData);
       fetchStudents();
-      setNewStudent({ name: '', age: '', grade: '' });
+      setNewStudent({ name: '', age: 0, grade: '' });
     } catch (error) {
       console.error("Error adding student:", error);
     }
